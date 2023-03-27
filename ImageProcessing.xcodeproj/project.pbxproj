@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F68C7301A867B9B1CB5E3ABF /* Pods_ImageProcessing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4831213AE8BB9857BD0AFD50 /* Pods_ImageProcessing.framework */; };
 		FBB7D75C29D1BE0100671C52 /* ImageProcessingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB7D75B29D1BE0100671C52 /* ImageProcessingApp.swift */; };
 		FBB7D75E29D1BE0100671C52 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB7D75D29D1BE0100671C52 /* ContentView.swift */; };
 		FBB7D76029D1BE0200671C52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBB7D75F29D1BE0200671C52 /* Assets.xcassets */; };
@@ -14,6 +15,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4831213AE8BB9857BD0AFD50 /* Pods_ImageProcessing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImageProcessing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		761AA3C77B27467DD7483096 /* Pods-ImageProcessing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageProcessing.release.xcconfig"; path = "Target Support Files/Pods-ImageProcessing/Pods-ImageProcessing.release.xcconfig"; sourceTree = "<group>"; };
+		A49EA24FC719335CC0910B4C /* Pods-ImageProcessing.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageProcessing.debug.xcconfig"; path = "Target Support Files/Pods-ImageProcessing/Pods-ImageProcessing.debug.xcconfig"; sourceTree = "<group>"; };
 		FBB7D75829D1BE0100671C52 /* ImageProcessing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageProcessing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBB7D75B29D1BE0100671C52 /* ImageProcessingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessingApp.swift; sourceTree = "<group>"; };
 		FBB7D75D29D1BE0100671C52 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -26,17 +30,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F68C7301A867B9B1CB5E3ABF /* Pods_ImageProcessing.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		74C4C51948169010ABE770C5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4831213AE8BB9857BD0AFD50 /* Pods_ImageProcessing.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F93AE77F530CF53302131BC8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A49EA24FC719335CC0910B4C /* Pods-ImageProcessing.debug.xcconfig */,
+				761AA3C77B27467DD7483096 /* Pods-ImageProcessing.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		FBB7D74F29D1BE0100671C52 = {
 			isa = PBXGroup;
 			children = (
 				FBB7D75A29D1BE0100671C52 /* ImageProcessing */,
 				FBB7D75929D1BE0100671C52 /* Products */,
+				F93AE77F530CF53302131BC8 /* Pods */,
+				74C4C51948169010ABE770C5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,6 +99,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FBB7D76629D1BE0200671C52 /* Build configuration list for PBXNativeTarget "ImageProcessing" */;
 			buildPhases = (
+				50B4DA99A5B25D779069BE58 /* [CP] Check Pods Manifest.lock */,
 				FBB7D75429D1BE0100671C52 /* Sources */,
 				FBB7D75529D1BE0100671C52 /* Frameworks */,
 				FBB7D75629D1BE0100671C52 /* Resources */,
@@ -131,6 +157,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		50B4DA99A5B25D779069BE58 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ImageProcessing-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FBB7D75429D1BE0100671C52 /* Sources */ = {
@@ -261,6 +312,7 @@
 		};
 		FBB7D76729D1BE0200671C52 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A49EA24FC719335CC0910B4C /* Pods-ImageProcessing.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -275,6 +327,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -290,6 +343,7 @@
 		};
 		FBB7D76829D1BE0200671C52 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 761AA3C77B27467DD7483096 /* Pods-ImageProcessing.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -304,6 +358,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
