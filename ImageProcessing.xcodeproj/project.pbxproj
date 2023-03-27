@@ -12,6 +12,14 @@
 		FBB7D75E29D1BE0100671C52 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB7D75D29D1BE0100671C52 /* ContentView.swift */; };
 		FBB7D76029D1BE0200671C52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBB7D75F29D1BE0200671C52 /* Assets.xcassets */; };
 		FBB7D76329D1BE0200671C52 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBB7D76229D1BE0200671C52 /* Preview Assets.xcassets */; };
+		FBB7D76B29D1BF9500671C52 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB7D76A29D1BF9500671C52 /* HomeView.swift */; };
+		FBB7D76F29D1C05100671C52 /* ImageStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB7D76E29D1C05100671C52 /* ImageStackView.swift */; };
+		FBB7D77229D1C07300671C52 /* PHAsset+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB7D77129D1C07300671C52 /* PHAsset+.swift */; };
+		FBB7D77629D1C5CC00671C52 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = FBB7D77529D1C5CC00671C52 /* Dependencies */; };
+		FBB7D77929D1C86400671C52 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = FBB7D77829D1C86400671C52 /* ComposableArchitecture */; };
+		FBB7D77B29D1DED700671C52 /* PhotoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB7D77A29D1DED700671C52 /* PhotoClient.swift */; };
+		FBB7D77E29D1ED4F00671C52 /* PHFetchResultCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB7D77D29D1ED4F00671C52 /* PHFetchResultCollection.swift */; };
+		FBB7D78029D1FC1E00671C52 /* PHImageManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB7D77F29D1FC1E00671C52 /* PHImageManager+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +31,12 @@
 		FBB7D75D29D1BE0100671C52 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FBB7D75F29D1BE0200671C52 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBB7D76229D1BE0200671C52 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FBB7D76A29D1BF9500671C52 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		FBB7D76E29D1C05100671C52 /* ImageStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStackView.swift; sourceTree = "<group>"; };
+		FBB7D77129D1C07300671C52 /* PHAsset+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHAsset+.swift"; sourceTree = "<group>"; };
+		FBB7D77A29D1DED700671C52 /* PhotoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoClient.swift; sourceTree = "<group>"; };
+		FBB7D77D29D1ED4F00671C52 /* PHFetchResultCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHFetchResultCollection.swift; sourceTree = "<group>"; };
+		FBB7D77F29D1FC1E00671C52 /* PHImageManager+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHImageManager+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +45,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F68C7301A867B9B1CB5E3ABF /* Pods_ImageProcessing.framework in Frameworks */,
+				FBB7D77629D1C5CC00671C52 /* Dependencies in Frameworks */,
+				FBB7D77929D1C86400671C52 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,7 +67,6 @@
 				A49EA24FC719335CC0910B4C /* Pods-ImageProcessing.debug.xcconfig */,
 				761AA3C77B27467DD7483096 /* Pods-ImageProcessing.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -76,6 +91,9 @@
 		FBB7D75A29D1BE0100671C52 /* ImageProcessing */ = {
 			isa = PBXGroup;
 			children = (
+				FBB7D77C29D1ED4400671C52 /* Utils */,
+				FBB7D77029D1C06800671C52 /* Extension */,
+				FBB7D76929D1BF8A00671C52 /* Scenes */,
 				FBB7D75B29D1BE0100671C52 /* ImageProcessingApp.swift */,
 				FBB7D75D29D1BE0100671C52 /* ContentView.swift */,
 				FBB7D75F29D1BE0200671C52 /* Assets.xcassets */,
@@ -90,6 +108,41 @@
 				FBB7D76229D1BE0200671C52 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FBB7D76929D1BF8A00671C52 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				FBB7D77329D1C1D400671C52 /* Home */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		FBB7D77029D1C06800671C52 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				FBB7D77129D1C07300671C52 /* PHAsset+.swift */,
+				FBB7D77F29D1FC1E00671C52 /* PHImageManager+.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		FBB7D77329D1C1D400671C52 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				FBB7D76A29D1BF9500671C52 /* HomeView.swift */,
+				FBB7D77A29D1DED700671C52 /* PhotoClient.swift */,
+				FBB7D76E29D1C05100671C52 /* ImageStackView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		FBB7D77C29D1ED4400671C52 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				FBB7D77D29D1ED4F00671C52 /* PHFetchResultCollection.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,6 +162,10 @@
 			dependencies = (
 			);
 			name = ImageProcessing;
+			packageProductDependencies = (
+				FBB7D77529D1C5CC00671C52 /* Dependencies */,
+				FBB7D77829D1C86400671C52 /* ComposableArchitecture */,
+			);
 			productName = ImageProcessing;
 			productReference = FBB7D75829D1BE0100671C52 /* ImageProcessing.app */;
 			productType = "com.apple.product-type.application";
@@ -137,6 +194,10 @@
 				Base,
 			);
 			mainGroup = FBB7D74F29D1BE0100671C52;
+			packageReferences = (
+				FBB7D77429D1C5CC00671C52 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
+				FBB7D77729D1C86400671C52 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = FBB7D75929D1BE0100671C52 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -188,8 +249,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBB7D76B29D1BF9500671C52 /* HomeView.swift in Sources */,
+				FBB7D78029D1FC1E00671C52 /* PHImageManager+.swift in Sources */,
 				FBB7D75E29D1BE0100671C52 /* ContentView.swift in Sources */,
+				FBB7D77229D1C07300671C52 /* PHAsset+.swift in Sources */,
 				FBB7D75C29D1BE0100671C52 /* ImageProcessingApp.swift in Sources */,
+				FBB7D77E29D1ED4F00671C52 /* PHFetchResultCollection.swift in Sources */,
+				FBB7D77B29D1DED700671C52 /* PhotoClient.swift in Sources */,
+				FBB7D76F29D1C05100671C52 /* ImageStackView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +389,7 @@
 				DEVELOPMENT_TEAM = 4NY95N3V93;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow photo permission - Need to change this text";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -353,6 +421,7 @@
 				DEVELOPMENT_TEAM = 4NY95N3V93;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow photo permission - Need to change this text";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -394,6 +463,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FBB7D77429D1C5CC00671C52 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-dependencies";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+		FBB7D77729D1C86400671C52 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FBB7D77529D1C5CC00671C52 /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FBB7D77429D1C5CC00671C52 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = Dependencies;
+		};
+		FBB7D77829D1C86400671C52 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FBB7D77729D1C86400671C52 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FBB7D75029D1BE0100671C52 /* Project object */;
 }

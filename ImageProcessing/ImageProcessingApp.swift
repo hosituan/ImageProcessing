@@ -6,12 +6,20 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct ImageProcessingApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                HomeView(
+                    store: Store(
+                        initialState: Home.State(),
+                        reducer: Home()._printChanges()
+                    )
+                )
+            }
         }
     }
 }
