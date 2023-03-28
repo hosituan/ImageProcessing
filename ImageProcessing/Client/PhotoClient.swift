@@ -42,6 +42,7 @@ extension PhotoClient: DependencyKey {
                 return PHFetchResultCollection(fetchResult: fetchResult)
             },
             processImages: { assets in
+                let start = DispatchTime.now()
                 let request = VNGenerateImageFeaturePrintRequest()
                 for asset in assets {
                     if db.fetchVectors(from: asset.localIdentifier) == nil, let image = try await asset.previewImage().cgImage {
@@ -57,6 +58,10 @@ extension PhotoClient: DependencyKey {
                         }
                     }
                 }
+                let end = DispatchTime.now()
+                let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds // subtract start
+                let timeInterval = Double(nanoTime) / 1_000_000_000 // convert nanoseconds to seconds
+                print("Time elapsed: \(timeInterval) seconds")
                 return true
             },
             loadPhotoFromIdentifier: { identifiers in
