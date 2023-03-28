@@ -9,9 +9,12 @@ import Foundation
 import ComposableArchitecture
 import Photos
 import Vision
+import Accelerate
+import KDTree
 
 struct VectorClient {
-    var loadSimilarIdentifiers: @Sendable (String) async -> [String]
+    var createKDTree: @Sendable ([Vector2048]) async throws -> KDTree<Vector2048>
+    var loadSimilarIdentifiers: @Sendable (KDTree<Vector2048>, String) async -> [String]
 }
 
 extension DependencyValues {
@@ -25,35 +28,23 @@ extension VectorClient: DependencyKey {
     static var liveValue: Self {
         let db = Database()
         return Self(
-            loadSimilarIdentifiers: { id in
-                let allVectors = db.fetchAll()
-//                let currentVector = db.fetchVectors(from: id)?.vectors.toFloatArray() ?? []
-                let currentVector = db.fetchVectors(from: id)?.vectorString.toArray() ?? []
-//                let sortedVectors = allVectors.sorted(by: { vec1, vec2 in
-//                    let vector1 = vec1.vectorString.toArray()
-//                    let vector2 = vec2.vectorString.toArray()
-//                    let dist1 = l2distance(vector1, currentVector)
-//                    let dist2 = l2distance(vector2, currentVector)
-//                    return dist1 < dist2
-//                })
-//                let ids = sortedVectors.map { $0.id }
-                var minId = ""
-                var min: Float = 999.0
-                for vector in allVectors {
-                    let dic = l2distance(currentVector, vector.vectorString.toArray())
-                    if dic < min, vector.id != id {
-                        min = dic
-                        minId = vector.id
-                    }
+            createKDTree: { vectors in
+                return KDTree<Vector2048>(values: vectors)
+            },
+            loadSimilarIdentifiers: { tree, id in
+                guard let currentVector = db.fetchVectors(from: id) else { return [] }
+                let start = DispatchTime.now()
+                let nearestNeighbor = tree.nearestK(10, to: currentVector.vector2048)
+                let end = DispatchTime.now()
+                let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds // subtract start 
+                let timeInterval = Double(nanoTime) / 1_000_000_000 // convert nanoseconds to seconds
+                print("Time elapsed: \(timeInterval) seconds")
+                var ids = [String]()
+                for v in nearestNeighbor {
+                    ids.append(v.id)
                 }
-                return [minId]
+                return ids
             }
         )
-    }
-}
-
-extension VectorClient {
-    static func l2distance(_ feat1: [Float], _ feat2: [Float]) -> Float {
-        return sqrt(zip(feat1, feat2).map { f1, f2 in pow(f2 - f1, 2) }.reduce(0, +))
     }
 }

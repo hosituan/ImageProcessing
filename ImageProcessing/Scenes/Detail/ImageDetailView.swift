@@ -32,7 +32,7 @@ struct ImageDetailView: View {
                         NavigationLink {
                             ImageDetailView(
                                 store: Store(
-                                    initialState: ImageDetail.State(asset: asset),
+                                    initialState: ImageDetail.State(tree: viewStore.tree, asset: asset),
                                     reducer: ImageDetail()
                                 )
                             )
@@ -44,7 +44,6 @@ struct ImageDetailView: View {
             }
             .navigationTitle("Similar Photos")
             .onAppear {
-                viewStore.send(.loadDatabase)
                 viewStore.send(.loadImage)
                 viewStore.send(.loadSimilarPhotos)
             }

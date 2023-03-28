@@ -13,6 +13,9 @@ import Vision
 
 struct HomeView: View {
     let store: StoreOf<Home>
+    init(store: StoreOf<Home>) {
+        self.store = store
+    }
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             ScrollView(.vertical) {
@@ -21,7 +24,7 @@ struct HomeView: View {
                         NavigationLink {
                             ImageDetailView(
                                 store: Store(
-                                    initialState: ImageDetail.State(asset: asset),
+                                    initialState: ImageDetail.State(tree: viewStore.tree, asset: asset),
                                     reducer: ImageDetail()
                                 )
                             )
@@ -30,45 +33,32 @@ struct HomeView: View {
                         }
                     }
                 }
-
             }
             .overlay(actionStackView(viewStore), alignment: .bottom)
             .navigationTitle("Photos")
             .alert(self.store.scope(state: \.alert), dismiss: .alertDismissed)
             .onAppear {
                 viewStore.send(.requestPermission)
+                viewStore.send(.loadDatabase)
             }
         }
     }
     
     func actionStackView(_ store: ViewStore<Home.State, Home.Action>) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                Button {
-                    store.send(.loadPhotos)
-                } label: {
-                    Text("Load Photos")
-                        .foregroundColor(.white)
-                        .font(.system(.headline))
-                        .frame(height: 56)
-                        .padding(.horizontal)
-                        .background(Color.accentColor)
-                        .cornerRadius(12)
-                }
-                Button {
-                    store.send(.processImages)
-                } label: {
-                    Text("Process Images")
-                        .foregroundColor(.white)
-                        .font(.system(.headline))
-                        .frame(height: 56)
-                        .padding(.horizontal)
-                        .background(Color.accentColor)
-                        .cornerRadius(12)
-                }
+        HStack {
+            Button {
+                store.send(.processImages)
+            } label: {
+                Text("Process Images")
+                    .foregroundColor(.white)
+                    .font(.system(.headline))
+                    .frame(height: 56)
+                    .padding(.horizontal)
+                    .background(Color.accentColor)
+                    .cornerRadius(12)
             }
-            .padding(.horizontal, 24)
         }
+        .padding(.horizontal, 24)
     }
     
 }

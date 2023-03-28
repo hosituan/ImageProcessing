@@ -48,10 +48,6 @@ extension PhotoClient: DependencyKey {
                         let imageRequestHandler = VNImageRequestHandler(cgImage: image, options: [:])
                         try imageRequestHandler.perform([request])
                         if let featurePrint = request.results?.first as? VNFeaturePrintObservation {
-//                            let data = Data(featurePrint.data)
-//                            let featurePrintObject = FeaturePrint(id: asset.localIdentifier, data: data)
-//                            db.insertRow(featurePrint: featurePrintObject)
-//                             Example of vectors saver
                             featurePrint.data.withUnsafeBytes { raw in
                                 let ptr = raw.baseAddress!.assumingMemoryBound(to: Float.self)
                                 let vectors = Array(UnsafeBufferPointer(start: ptr, count: featurePrint.elementCount))

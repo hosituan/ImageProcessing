@@ -10,6 +10,7 @@ import SwiftUI
 import ComposableArchitecture
 import Photos
 import Vision
+import KDTree
 
 struct Home: ReducerProtocol {
     struct State: Equatable {
@@ -19,6 +20,7 @@ struct Home: ReducerProtocol {
         var alert: AlertState<Action>?
         var processed = 0
         var errorCount = 0
+        var tree: KDTree<Vector2048> = .init(values: [])
     }
     
     
@@ -28,17 +30,20 @@ struct Home: ReducerProtocol {
         }
         case alertDismissed
         case requestPermission
+        case loadDatabase
         case pemissionResult(PHAuthorizationStatus)
         case loadPhotos
         case photosLoaded(TaskResult<PHFetchResultCollection>)
         case processImages
         case progress(TaskResult<Bool>)
+        case treeCreated(KDTree<Vector2048>)
         
     }
     
     @Dependency(\.uuid) var uuid
     @Dependency(\.photoClient) var photoClient
     @Dependency(\.db) var db
+    @Dependency(\.vectorClient) var vectorClient
     
     var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
@@ -74,7 +79,9 @@ struct Home: ReducerProtocol {
                 state.isLoading = true
                 switch status {
                 case .authorized, .limited:
-                    return .none
+                    return .run { send in
+                        await send(.loadPhotos)
+                    }
                 case .denied, .notDetermined:
                     state.alert = AlertState {
                         TextState("You denied access to photos. This app needs this permission.")
@@ -117,6 +124,16 @@ struct Home: ReducerProtocol {
                         TextState("\(error.localizedDescription)")
                     }
                 }
+                return .none
+            case .loadDatabase:
+                guard state.tree.count == 0 else { return .none }
+                return .run { send in
+                    let vectors = db.fetchAll()
+                    let tree = KDTree(values: vectors.map { $0.vector2048 })
+                    await send(.treeCreated(tree))
+                }
+            case .treeCreated(let tree):
+                state.tree = tree
                 return .none
             }
             return .none

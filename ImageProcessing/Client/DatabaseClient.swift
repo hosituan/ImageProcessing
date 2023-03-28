@@ -9,58 +9,55 @@ import Foundation
 import Photos
 import ComposableArchitecture
 import GRDB
+import KDTree
 
 // We should save feature print as Data, no need to convert to 2048 dimensional vectors
 struct VectorData: Codable, FetchableRecord, PersistableRecord, Equatable {
     var id: String
     var vectors: Data
-    var vectorString: String
+    
+    var vector2048: Vector2048 {
+        return Vector2048(id: id, values: vectors.toFloatArray())
+    }
     init(id: String, vectors: [Float]) {
         self.id = id
         self.vectors = vectors.toData()
-        self.vectorString = vectors.toString()
     }
 }
 
-struct FeaturePrint: Codable, FetchableRecord, PersistableRecord {
+// Can't use VectorData for KDTreePoint
+struct Vector2048: KDTreePoint {
     var id: String
-    var data: Data
-    
-    static let databaseTableName = "feature_prints"
-}
-
-extension String {
-    func toArray() -> [Float] {
-        var vector: [Float] = []
-        let array = self.components(separatedBy: "|")
-        for item in array {
-            if let value = Float(item) {
-                vector.append(value)
-            }
+    var values: [Float]
+    func kdDimension(_ dimension: Int) -> Double {
+        guard dimension >= 0 && dimension < Vector2048.dimensions else {
+            fatalError("Invalid dimension")
         }
-        return vector
+        return Double(values[dimension])
     }
+    
+    func squaredDistance(to otherPoint: Vector2048) -> Double {
+        return Double(l2distance(self.values, otherPoint.values))
+    }
+    
+    func l2distance(_ feat1: [Float], _ feat2: [Float]) -> Float {
+        return sqrt(zip(feat1, feat2).map { f1, f2 in pow(f2 - f1, 2) }.reduce(0, +))
+    }
+    
+    static var dimensions = 2048
 }
-
 
 extension Array where Element == Float {
     func toData() -> Data {
-        let vectorBytes = self.withUnsafeBytes { $0 }
-        guard let baseAddress = vectorBytes.baseAddress else { return Data() }
-        return Data(bytes: baseAddress, count: vectorBytes.count)
-    }
-    
-    func toString() -> String {
-        var string = ""
-        for item in self {
-            string += "\(item)|"
+        let count = self.count * MemoryLayout<Float>.stride
+        let data = self.withUnsafeBytes { ptr in
+            return Data(bytes: ptr.baseAddress!, count: count)
         }
-        return string
+        return data
     }
 }
 
 public enum ArrayResult<T:Equatable> {
-    
     case success(result: [T])
     case failure(error: Error)
 }
@@ -79,11 +76,12 @@ extension ArrayResult: Equatable {
 
 extension Data {
     func toFloatArray() -> [Float] {
-        let bufferPointer = self.withUnsafeBytes {
-            return UnsafeRawBufferPointer(start: $0.baseAddress!, count: self.count/MemoryLayout<Float>.stride)
+        let count = self.count / MemoryLayout<Float>.stride
+        let floatArray = self.withUnsafeBytes { ptr in
+            return ptr.bindMemory(to: Float.self).prefix(count).map { $0 }
         }
-        let floatPointer = bufferPointer.bindMemory(to: Float.self)
-        return Array(floatPointer)
+        return floatArray
+
     }
 }
 
@@ -101,7 +99,6 @@ extension Database: DependencyKey {
 
 struct Database {
     var dbQueue: DatabaseQueue!
-    //var
     init() {
         do {
             dbQueue = try DatabaseQueue(path: FileManager.databaseURL(for: "database")?.absoluteString ?? "")
@@ -117,7 +114,6 @@ struct Database {
                 try db.create(table: "VectorData") { table in
                     table.column("id", .text).primaryKey()
                     table.column("vectors", .any).notNull()
-                    table.column("vectorString", .text).notNull()
                 }
             }
         } catch let error {
@@ -125,20 +121,7 @@ struct Database {
         }
         
     }
-    
-    func createFeaturePrintTable() {
-        do {
-            try dbQueue.write({ db in
-                try db.create(table: FeaturePrint.databaseTableName) { table in
-                    table.column("id", .integer).primaryKey()
-                    table.column("data", .any)
-                }
-            })
-        } catch let error {
-            print(error)
-        }
-    }
-    
+
     func insertRow(vector: VectorData) {
         do {
             try dbQueue.write { db in
@@ -172,37 +155,5 @@ struct Database {
             
         }
     }
-    
-    func insertRow(featurePrint: FeaturePrint) {
-        do {
-            try dbQueue.write { db in
-                try featurePrint.insert(db)
-            }
-        } catch let error {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func fetchAllFeaturePrint() -> [FeaturePrint] {
-        do {
-            let result = try dbQueue.read({ db in
-                try FeaturePrint.fetchAll(db)
-            })
-            return result
-        } catch let error {
-            print(error)
-            return []
-        }
-    }
-    
-    func fetchFeaturePrints(from id: String) -> FeaturePrint? {
-        do {
-            return try dbQueue.read({ db in
-                try FeaturePrint.fetchOne(db, key: id)
-            })
-        } catch let error {
-            print(error)
-            return nil
-        }
-    }
+
 }

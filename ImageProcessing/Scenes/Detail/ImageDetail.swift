@@ -9,6 +9,7 @@ import Foundation
 import ComposableArchitecture
 import Photos
 import UIKit
+import KDTree
 
 struct ImageDetail: ReducerProtocol {
     struct State: Equatable {
@@ -16,16 +17,15 @@ struct ImageDetail: ReducerProtocol {
         var asset: PHAsset!
         var similarPhotos: PHFetchResultCollection = .init(fetchResult: .init())
         var vectorData = ArrayResult.success(result: [VectorData]())
-        init(asset: PHAsset) {
+        var tree: KDTree<Vector2048>
+        init(tree: KDTree<Vector2048>, asset: PHAsset) {
             self.asset = asset
+            self.tree = tree
         }
-        
-        
     }
     
     enum Action: Equatable {
         case loadImage
-        case loadDatabase
         
         case imageLoaded(UIImage?)
         case loadSimilarPhotos
@@ -49,8 +49,8 @@ struct ImageDetail: ReducerProtocol {
                 state.image = image
                 return .none
             case .loadSimilarPhotos:
-                return .run { [id = state.asset.localIdentifier] send in
-                    let ids = await self.vectorClient.loadSimilarIdentifiers(id)
+                return .run { [id = state.asset.localIdentifier, tree = state.tree ] send in
+                    let ids = await self.vectorClient.loadSimilarIdentifiers(tree, id)
                     let photos = self.photoClient.loadPhotoFromIdentifier(ids)
                     await send(.similarPhotosLoaded(photos))
                 }
@@ -58,9 +58,6 @@ struct ImageDetail: ReducerProtocol {
                 return .none
             case .similarPhotosLoaded(let photos):
                 state.similarPhotos = photos
-                return .none
-            case .loadDatabase:
-                state.vectorData = ArrayResult.success(result: db.fetchAll())
                 return .none
             }
         }
