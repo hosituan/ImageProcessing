@@ -32,7 +32,11 @@ struct ImageDetailView: View {
                         NavigationLink {
                             ImageDetailView(
                                 store: Store(
-                                    initialState: ImageDetail.State(tree: viewStore.tree, asset: asset),
+                                    initialState:
+                                        ImageDetail.State(
+                                            tree: viewStore.tree,
+                                            asset: asset
+                                        ),
                                     reducer: ImageDetail()
                                 )
                             )

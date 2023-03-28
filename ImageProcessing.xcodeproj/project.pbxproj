@@ -28,6 +28,8 @@
 		FBFA2B7F29D35EE000B091E9 /* ImageDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFA2B7E29D35EE000B091E9 /* ImageDetail.swift */; };
 		FBFA2B8129D35F3000B091E9 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFA2B8029D35F3000B091E9 /* Home.swift */; };
 		FBFA2B8629D3658000B091E9 /* KDTree in Frameworks */ = {isa = PBXBuildFile; productRef = FBFA2B8529D3658000B091E9 /* KDTree */; };
+		FBFA2B8829D37D5300B091E9 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFA2B8729D37D5300B091E9 /* Array+.swift */; };
+		FBFA2B8A29D37D9200B091E9 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFA2B8929D37D9200B091E9 /* View+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		FBFA2B7C29D34BEF00B091E9 /* VectorClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorClient.swift; sourceTree = "<group>"; };
 		FBFA2B7E29D35EE000B091E9 /* ImageDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetail.swift; sourceTree = "<group>"; };
 		FBFA2B8029D35F3000B091E9 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		FBFA2B8729D37D5300B091E9 /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
+		FBFA2B8929D37D9200B091E9 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +145,8 @@
 				FBB7D77129D1C07300671C52 /* PHAsset+.swift */,
 				FBB7D77F29D1FC1E00671C52 /* PHImageManager+.swift */,
 				FBFA2B7729D32D4000B091E9 /* FileManager+.swift */,
+				FBFA2B8729D37D5300B091E9 /* Array+.swift */,
+				FBFA2B8929D37D9200B091E9 /* View+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -313,6 +319,8 @@
 				FBB7D77E29D1ED4F00671C52 /* PHFetchResultCollection.swift in Sources */,
 				FBB7D77B29D1DED700671C52 /* PhotoClient.swift in Sources */,
 				FBB7D76F29D1C05100671C52 /* ImageStackView.swift in Sources */,
+				FBFA2B8A29D37D9200B091E9 /* View+.swift in Sources */,
+				FBFA2B8829D37D5300B091E9 /* Array+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -49,13 +49,19 @@ struct HomeView: View {
             Button {
                 store.send(.processImages)
             } label: {
-                Text("Process Images")
-                    .foregroundColor(.white)
-                    .font(.system(.headline))
-                    .frame(height: 56)
-                    .padding(.horizontal)
-                    .background(Color.accentColor)
-                    .cornerRadius(12)
+                ZStack {
+                    Text("Process Images")
+                        .foregroundColor(.white)
+                        .font(.system(.headline))
+                    ProgressView()
+                        .foregroundColor(.white)
+                        .frame(width: 40)
+                        .hidden(!store.isProcessing)
+                }
+                .frame(height: 56)
+                .padding(.horizontal)
+                .background(Color.accentColor)
+                .cornerRadius(12)
             }
         }
         .padding(.horizontal, 24)

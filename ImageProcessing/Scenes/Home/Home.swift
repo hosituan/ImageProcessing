@@ -18,8 +18,9 @@ struct Home: ReducerProtocol {
         var isLoading = false
         var isProcessing = false
         var alert: AlertState<Action>?
-        var processed = 0
-        var errorCount = 0
+//        var processed = 0
+//        var errorCount = 0
+        var finishProcessing = false
         var tree: KDTree<Vector2048> = .init(values: [])
     }
     
@@ -35,7 +36,7 @@ struct Home: ReducerProtocol {
         case loadPhotos
         case photosLoaded(TaskResult<PHFetchResultCollection>)
         case processImages
-        case progress(TaskResult<Bool>)
+        case finishedProcessing(TaskResult<Bool>)
         case treeCreated(KDTree<Vector2048>)
         
     }
@@ -49,6 +50,7 @@ struct Home: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .alertDismissed:
+                state.alert = nil
                 return .none
             case .requestPermission:
                 return .task {
@@ -107,19 +109,25 @@ struct Home: ReducerProtocol {
                         return
                     }
                     let result = try await self.photoClient.processImages(photos)
-                    await send(.progress(.success(result)))
+                    await send(.finishedProcessing(.success(result)))
                 }
-            case .progress(let result):
+            case .finishedProcessing(let result):
+                state.isProcessing = false
                 switch result {
                 case .success(let success):
                     if success {
-                        state.processed += 1
+                        state.alert = AlertState {
+                            TextState("Finished processing")
+                        }
+                        return .run { send in
+                            await send(.loadDatabase)
+                        }
                     } else {
-                        state.errorCount += 1
+                        state.alert = AlertState {
+                            TextState("Error ....")
+                        }
                     }
-                    break
                 case .failure(let error):
-                    state.errorCount += 1
                     state.alert = AlertState {
                         TextState("\(error.localizedDescription)")
                     }

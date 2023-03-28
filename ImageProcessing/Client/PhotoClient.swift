@@ -44,7 +44,7 @@ extension PhotoClient: DependencyKey {
             processImages: { assets in
                 let request = VNGenerateImageFeaturePrintRequest()
                 for asset in assets {
-                    if let image = try await asset.previewImage().cgImage {
+                    if db.fetchVectors(from: asset.localIdentifier) == nil, let image = try await asset.previewImage().cgImage {
                         let imageRequestHandler = VNImageRequestHandler(cgImage: image, options: [:])
                         try imageRequestHandler.perform([request])
                         if let featurePrint = request.results?.first as? VNFeaturePrintObservation {
