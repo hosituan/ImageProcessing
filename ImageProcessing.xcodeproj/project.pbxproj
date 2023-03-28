@@ -20,6 +20,12 @@
 		FBB7D77B29D1DED700671C52 /* PhotoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB7D77A29D1DED700671C52 /* PhotoClient.swift */; };
 		FBB7D77E29D1ED4F00671C52 /* PHFetchResultCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB7D77D29D1ED4F00671C52 /* PHFetchResultCollection.swift */; };
 		FBB7D78029D1FC1E00671C52 /* PHImageManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB7D77F29D1FC1E00671C52 /* PHImageManager+.swift */; };
+		FBB7D78329D30F0600671C52 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = FBB7D78229D30F0600671C52 /* SQLite */; };
+		FBB7D78529D30F1E00671C52 /* DatabaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB7D78429D30F1E00671C52 /* DatabaseClient.swift */; };
+		FBFA2B7629D32D3600B091E9 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = FBFA2B7529D32D3600B091E9 /* GRDB */; };
+		FBFA2B7829D32D4000B091E9 /* FileManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFA2B7729D32D4000B091E9 /* FileManager+.swift */; };
+		FBFA2B7B29D3415E00B091E9 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFA2B7A29D3415E00B091E9 /* DetailView.swift */; };
+		FBFA2B7D29D34BEF00B091E9 /* VectorClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFA2B7C29D34BEF00B091E9 /* VectorClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +43,10 @@
 		FBB7D77A29D1DED700671C52 /* PhotoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoClient.swift; sourceTree = "<group>"; };
 		FBB7D77D29D1ED4F00671C52 /* PHFetchResultCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHFetchResultCollection.swift; sourceTree = "<group>"; };
 		FBB7D77F29D1FC1E00671C52 /* PHImageManager+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHImageManager+.swift"; sourceTree = "<group>"; };
+		FBB7D78429D30F1E00671C52 /* DatabaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseClient.swift; sourceTree = "<group>"; };
+		FBFA2B7729D32D4000B091E9 /* FileManager+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+.swift"; sourceTree = "<group>"; };
+		FBFA2B7A29D3415E00B091E9 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		FBFA2B7C29D34BEF00B091E9 /* VectorClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +54,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBB7D78329D30F0600671C52 /* SQLite in Frameworks */,
+				FBFA2B7629D32D3600B091E9 /* GRDB in Frameworks */,
 				F68C7301A867B9B1CB5E3ABF /* Pods_ImageProcessing.framework in Frameworks */,
 				FBB7D77629D1C5CC00671C52 /* Dependencies in Frameworks */,
 				FBB7D77929D1C86400671C52 /* ComposableArchitecture in Frameworks */,
@@ -113,6 +125,7 @@
 		FBB7D76929D1BF8A00671C52 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				FBFA2B7929D3415600B091E9 /* Detail */,
 				FBB7D77329D1C1D400671C52 /* Home */,
 			);
 			path = Scenes;
@@ -123,6 +136,7 @@
 			children = (
 				FBB7D77129D1C07300671C52 /* PHAsset+.swift */,
 				FBB7D77F29D1FC1E00671C52 /* PHImageManager+.swift */,
+				FBFA2B7729D32D4000B091E9 /* FileManager+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -132,6 +146,7 @@
 			children = (
 				FBB7D76A29D1BF9500671C52 /* HomeView.swift */,
 				FBB7D77A29D1DED700671C52 /* PhotoClient.swift */,
+				FBB7D78429D30F1E00671C52 /* DatabaseClient.swift */,
 				FBB7D76E29D1C05100671C52 /* ImageStackView.swift */,
 			);
 			path = Home;
@@ -143,6 +158,15 @@
 				FBB7D77D29D1ED4F00671C52 /* PHFetchResultCollection.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		FBFA2B7929D3415600B091E9 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				FBFA2B7A29D3415E00B091E9 /* DetailView.swift */,
+				FBFA2B7C29D34BEF00B091E9 /* VectorClient.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,6 +189,8 @@
 			packageProductDependencies = (
 				FBB7D77529D1C5CC00671C52 /* Dependencies */,
 				FBB7D77829D1C86400671C52 /* ComposableArchitecture */,
+				FBB7D78229D30F0600671C52 /* SQLite */,
+				FBFA2B7529D32D3600B091E9 /* GRDB */,
 			);
 			productName = ImageProcessing;
 			productReference = FBB7D75829D1BE0100671C52 /* ImageProcessing.app */;
@@ -197,6 +223,8 @@
 			packageReferences = (
 				FBB7D77429D1C5CC00671C52 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 				FBB7D77729D1C86400671C52 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				FBB7D78129D30F0600671C52 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				FBFA2B7429D32D3600B091E9 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 			);
 			productRefGroup = FBB7D75929D1BE0100671C52 /* Products */;
 			projectDirPath = "";
@@ -251,7 +279,11 @@
 			files = (
 				FBB7D76B29D1BF9500671C52 /* HomeView.swift in Sources */,
 				FBB7D78029D1FC1E00671C52 /* PHImageManager+.swift in Sources */,
+				FBB7D78529D30F1E00671C52 /* DatabaseClient.swift in Sources */,
+				FBFA2B7D29D34BEF00B091E9 /* VectorClient.swift in Sources */,
+				FBFA2B7829D32D4000B091E9 /* FileManager+.swift in Sources */,
 				FBB7D75E29D1BE0100671C52 /* ContentView.swift in Sources */,
+				FBFA2B7B29D3415E00B091E9 /* DetailView.swift in Sources */,
 				FBB7D77229D1C07300671C52 /* PHAsset+.swift in Sources */,
 				FBB7D75C29D1BE0100671C52 /* ImageProcessingApp.swift in Sources */,
 				FBB7D77E29D1ED4F00671C52 /* PHFetchResultCollection.swift in Sources */,
@@ -481,6 +513,22 @@
 				kind = branch;
 			};
 		};
+		FBB7D78129D30F0600671C52 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.2;
+			};
+		};
+		FBFA2B7429D32D3600B091E9 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -493,6 +541,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FBB7D77729D1C86400671C52 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		FBB7D78229D30F0600671C52 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FBB7D78129D30F0600671C52 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+		FBFA2B7529D32D3600B091E9 /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FBFA2B7429D32D3600B091E9 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			productName = GRDB;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

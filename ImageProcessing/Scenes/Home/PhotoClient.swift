@@ -11,9 +11,10 @@ import Photos
 import Vision
 
 struct PhotoClient {
-    var requestPermission: @Sendable () async throws -> PHAuthorizationStatus
-    var loadPhotos: @Sendable () async throws -> PHFetchResultCollection
+    var requestPermission: @Sendable () async -> PHAuthorizationStatus
+    var loadPhotos: @Sendable () -> PHFetchResultCollection
     var processImages: @Sendable (PHFetchResultCollection) async throws -> Bool
+    var loadPhotoFromIdentifier: @Sendable ([String]) -> PHFetchResultCollection
 }
 
 extension DependencyValues {
@@ -24,31 +25,49 @@ extension DependencyValues {
 }
 
 extension PhotoClient: DependencyKey {
-    static var liveValue = PhotoClient(
-        requestPermission: {
-            return await withCheckedContinuation { (continuation: CheckedContinuation<PHAuthorizationStatus, Never>) in
+    static var liveValue: Self {
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        let db = Database()
+        return Self(
+            requestPermission: {
+                return await withCheckedContinuation { (continuation: CheckedContinuation<PHAuthorizationStatus, Never>) in
                     PHPhotoLibrary.requestAuthorization { status in
                         continuation.resume(returning: status)
                     }
                 }
-        },
-        loadPhotos: {
-            return PHFetchResultCollection(fetchResult: PHAsset.fetchAssets(with: .image, options: PHFetchOptions()))
-        },
-        processImages: { assets in
-            let request = VNGenerateImageFeaturePrintRequest()
-            for asset in assets {
-                if let image = try await asset.previewImage().cgImage {
-                    let imageRequestHandler = VNImageRequestHandler(cgImage: image, options: [:])
-                    try imageRequestHandler.perform([request])
-                    if let featurePrint = request.results?.first as? VNFeaturePrintObservation {
-                        //print(featurePrint)
+            },
+            loadPhotos: {
+                let fetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+                return PHFetchResultCollection(fetchResult: fetchResult)
+            },
+            processImages: { assets in
+                let request = VNGenerateImageFeaturePrintRequest()
+                for asset in assets {
+                    if let image = try await asset.previewImage().cgImage {
+                        let imageRequestHandler = VNImageRequestHandler(cgImage: image, options: [:])
+                        try imageRequestHandler.perform([request])
+                        if let featurePrint = request.results?.first as? VNFeaturePrintObservation {
+//                            let data = Data(featurePrint.data)
+//                            let featurePrintObject = FeaturePrint(id: asset.localIdentifier, data: data)
+//                            db.insertRow(featurePrint: featurePrintObject)
+//                             Example of vectors saver
+                            featurePrint.data.withUnsafeBytes { raw in
+                                let ptr = raw.baseAddress!.assumingMemoryBound(to: Float.self)
+                                let vectors = Array(UnsafeBufferPointer(start: ptr, count: featurePrint.elementCount))
+                                let vectorData = VectorData(id: asset.localIdentifier, vectors: vectors)
+                                db.insertRow(vector: vectorData)
+                            }
+                        }
                     }
                 }
-//                progress.completedUnitCount += 1
-//                print(progress.completedUnitCount)
+                return true
+            },
+            loadPhotoFromIdentifier: { identifiers in
+                let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: fetchOptions)
+                return PHFetchResultCollection(fetchResult: fetchResult)
             }
-            return true
-        }
-    )
+        )
+        
+    }
 }

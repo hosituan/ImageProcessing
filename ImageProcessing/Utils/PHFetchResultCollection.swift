@@ -15,7 +15,7 @@ struct PHFetchResultCollection: RandomAccessCollection, Equatable {
 
     let fetchResult: PHFetchResult<PHAsset>
 
-    var endIndex: Int { fetchResult.count >= 1000 ? 1000 : fetchResult.count }
+    var endIndex: Int { fetchResult.count >= 500 ? 1000 : fetchResult.count }
     var startIndex: Int { 0 }
 
     subscript(position: Int) -> PHAsset {

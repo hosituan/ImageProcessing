@@ -10,6 +10,11 @@ import ComposableArchitecture
 
 @main
 struct ImageProcessingApp: App {
+    @Dependency(\.db) var db
+    init() {
+        db.createFeaturePrintTable()
+        db.createVectorTable()
+    }
     var body: some Scene {
         WindowGroup {
             NavigationView {
